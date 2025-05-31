@@ -1,20 +1,52 @@
-﻿// LAB_20_program.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <vector>
+using namespace std;
 
-#include <iostream>
-
-int main()
-{
-    std::cout << "Hello World!\n";
+bool isPalindrome(const vector<int>& vec) {
+    int n = vec.size();
+    for (int i = 0; i < n / 2; ++i) {
+        if (vec[i] != vec[n - 1 - i])
+            return false;
+    }
+    return true;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+int sumBetweenNegatives(const vector<int>& vec) {
+    int firstNeg = -1, lastNeg = -1;
+    for (int i = 0; i < vec.size(); ++i) {
+        if (vec[i] < 0) {
+            if (firstNeg == -1) firstNeg = i;
+            lastNeg = i;
+        }
+    }
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+    if (firstNeg == -1 || lastNeg == -1 || firstNeg == lastNeg)
+        return 0;
+
+    int sum = 0;
+    for (int i = firstNeg + 1; i < lastNeg; ++i) {
+        sum += vec[i];
+    }
+    return sum;
+}
+
+int main() {
+    system("chcp 1251 > nul"); // Підключення української мови (для Windows)
+    vector<int> vec(10);
+    cout << "Введіть 10 цілих чисел:\n";
+    for (int i = 0; i < 10; ++i) {
+        cin >> vec[i];
+    }
+
+    if (isPalindrome(vec)) {
+        cout << "Вектор є паліндромом.\n";
+    }
+    else {
+        cout << "Вектор не є паліндромом.\n";
+    }
+
+    int sum = sumBetweenNegatives(vec);
+    cout << "Сума елементів між першим і останнім від’ємними: " << sum << endl;
+
+    return 0;
+}
